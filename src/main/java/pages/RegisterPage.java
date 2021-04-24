@@ -8,8 +8,6 @@ import base.TestBase;
 
 public class RegisterPage extends TestBase{
 
-	@FindBy(linkText="Profile")
-	WebElement Profile;
 	
 	@FindBy(name="reg_username")
 	WebElement usernameField;
@@ -20,35 +18,29 @@ public class RegisterPage extends TestBase{
 	@FindBy(name="reg_password")
 	WebElement passwordField;
 	
-	@FindBy(xpath="//*[@id=\\\"learn-press-user-profile\\\"]/div[2]/form/p[2]/button")
+	@FindBy(xpath="//div[@class='learnpress']/div/div[2]/form/p/button")
 	WebElement registerBtn;
 	
 	public RegisterPage() {
 		PageFactory.initElements(driver, this);
 	}
 	
-	public void clickProfileLink() {
-		Profile.click();
-	}
-	public void enterUserName(String reg_username) {
-		usernameField.sendKeys(reg_username);
+	public void enterUserName() {
+		usernameField.sendKeys("Thomas");
 	}
 	
-	public void enterEmail(String reg_email) {
-		emailField.sendKeys(reg_email);
+	public void enterEmail() {
+		emailField.sendKeys("Thomasjefferson@nomail.com");
 	}
 	
-	public void enterPassword(String reg_password) {
-		passwordField.sendKeys(reg_password);
+	public void enterPassword() {
+		passwordField.sendKeys("Jeffisthebest");
 	}
 	
 	public void clickRegister() {
 		registerBtn.click();
 	}
 	
-	public String getRegisterPageTitle() {
-		return driver.getTitle();
-	}
 	public String getLoginSuccessPage() {
 		return driver.getTitle();
 	}

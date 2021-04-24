@@ -1,5 +1,6 @@
 package stepDefinitions;
 
+import org.openqa.selenium.By;
 import org.testng.Assert;
 
 import base.TestBase;
@@ -9,57 +10,48 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import pages.HomePage;
 import pages.RegisterPage;
 
 
 public class Register extends TestBase {
 	RegisterPage rp;
-	@Before
-	public void openBrowser() {
-		initialization();
-		rp=new RegisterPage();
+	HomePage hp;
+	
+	public Register() {
+		rp = new RegisterPage();
+		hp = new HomePage();
 	}
 	
-	@After
-	public void closeBrowser() {
-		tearDown();
+	@Given("user is in homepage of application")
+	public void user_is_in_homepage_of_application() {
+	    System.out.println(hp.getHomePageTitle());
 	}
-	
-	@Given("user is on homepage")
-	public void user_is_on_homepage() {
-		System.out.println(rp.getRegisterPageTitle());
+	@And("user clicks on the Profile button")
+	public void user_clicks_on_the_profile_button() {
+	    hp.clickProfileLink();
 	}
 
-	@When("user clicks on Profile button")
-	public void user_clicks_on_profile_button() {
-		rp.clickProfileLink();
+	@When("user is navigated to Profile page")
+	public void user_is_navigated_to_profile_page() {
+	    System.out.println(driver.getTitle());
 	}
 
-	@And("user is navigated to register page")
-	public void user_is_navigated_to_register_page() {
-	    System.out.println(rp.getRegisterPageTitle());
-	}
-	
-	@When("user provides email, username & password")
+	@And("user provides email, username & password")
 	public void user_provides_email_username_password() {
-	   System.out.println("email, username and password is good");
+	    rp.enterUserName();
+	    rp.enterEmail();
+	    rp.enterPassword();
 	}
-
-//	@When("user provides {string}, {string} and {string}")
-//	public void user_provides_and(String reg_username, String reg_email, String reg_password) {
-//		 rp.enterUserName(reg_username);
-//		    rp.enterEmail(reg_email);
-//		    rp.enterPassword(reg_password);
-//	}
 
 	@When("user clicks on Register")
 	public void user_clicks_on_register() {
-	  rp.clickRegister();
-	}
-	@Then("user should be able to login successfully")
-	public void user_should_be_able_to_login_successfully() {
-	   Assert.assertEquals(driver.getTitle(), "Profile → Dashboard - Transfotech Academy");
+	    rp.clickRegister();
 	}
 
+	@Then("user should be able to register successfully")
+	public void user_should_be_able_to_register_successfully() {
+	    Assert.assertTrue(driver.findElement(By.xpath("//li[@class='dashboard active']/a")).isDisplayed());
+	}
 	
 }
